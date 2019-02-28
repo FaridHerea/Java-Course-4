@@ -10,34 +10,46 @@ import java.sql.Statement;
 public class DBConnection {
 
 	//Add dependencies and declare needed connection variabiles
-	private Connection connect = null;
-	private Statement statement = null;
-	private PreparedStatement preparedStatement = null;
-	private ResultSet resultSet = null;
+	private static Connection connect = null;
+	private static Statement statement = null;
+	private static PreparedStatement preparedStatement = null;
+	private static ResultSet resultSet = null;
 	
 	//Using the constructor create the connection using DriverManager
-	public DBConnection() {
-		try {
-			Class.forName("com.mysql.jdbc.Driver");
-			connect = DriverManager.getConnection("jdbc:mysql://localhost/dataBase?" + "user=sqluser&password=sqluserpw");
-		} catch (Exception e) {
-			e.printStackTrace();
+    public DBConnection() {
+   	
+   }
+	public static Connection getConn() {
+		if(connect==null) {
+			 try {
+					Class.forName("com.mysql.cj.jdbc.Driver");
+					connect = DriverManager.getConnection("jdbc:mysql://localhost:3306/dbFour?"
+		                           + "user=admin&password=asds123");
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			 return connect;
 		}
+		return connect;
 	}
-	
 	//Get values from DB
-	public void selectExample(String dbTable) throws Exception{
+	public static void selectExample(String dbTable) throws Exception{
+		connect=getConn();
 		statement = connect.createStatement();
 		resultSet = statement
 				.executeQuery("select * from " + dbTable);
-		String user = resultSet.getString("username");
-		String address = resultSet.getString("address");
-		System.out.println("Username : " + user + " , Address : " + address);
+		while(resultSet.next()) {
+			String user = resultSet.getString("username");
+			String address = resultSet.getString("address");
+			System.out.println("Username : " + user + " , Address : " + address);
+		}
+		
 	}
 	
-	//Inser values into DB
-	public void InsertExample(String username, String address, String dbTable) throws SQLException{
-		preparedStatement = connect.prepareStatement("insert into " + dbTable + "values (?,?)");
+	//Insert values into DB
+	public static void InsertExample(String username, String address, String dbTable) throws SQLException{
+		connect=getConn();
+		preparedStatement = connect.prepareStatement("insert into " + dbTable + " (username, address) values (?,?)");
 		preparedStatement.setString(1, "Vlad");
 		preparedStatement.setString(2, "Iasi");
 		preparedStatement.executeUpdate();
@@ -45,6 +57,7 @@ public class DBConnection {
 	
 	//Delete values from DB
 	public void deleteExample(String dbTable, String reference) throws SQLException{
+		connect=getConn();
 		preparedStatement = connect.prepareStatement("delete from " + dbTable + " where username =? ; ");
 		preparedStatement.setString(1, reference);
 		preparedStatement.executeUpdate();
@@ -52,6 +65,7 @@ public class DBConnection {
 	
 	//Update values in DB
 	public void updateExample(String reference, String address, String dbTable) throws SQLException{
+		connect=getConn();
 		preparedStatement = connect.prepareStatement("update " + dbTable + " set address=? where username=?");
 		preparedStatement.setString(1, address);
 		preparedStatement.setString(2, reference);

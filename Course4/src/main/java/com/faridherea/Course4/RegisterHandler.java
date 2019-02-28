@@ -7,6 +7,7 @@ import com.sun.net.httpserver.HttpHandler;
 @SuppressWarnings("restriction")
 public class RegisterHandler implements HttpHandler{
 	public void handle(HttpExchange t) throws IOException{
+		System.out.println(t.getRequestURI().getQuery());
 		//set the response as a string containg html code
 		String response = "<html>\r\n" + 
 				"    <head>\r\n" + 
@@ -46,22 +47,21 @@ public class RegisterHandler implements HttpHandler{
 				"            <a href=\"/contact/\">Contact</a>\r\n" + 
 				"        </nav>\r\n" + 
 				"        <section>\r\n" + 
-				"            <form>\r\n" + 
+				"            <form action=\"/registerResponse/\" method=\"GET\">\r\n" + 
 				"                <fieldset>\r\n" + 
 				"                    <legend>Register:</legend>\r\n" + 
 				"                    <div class=\"input\">\r\n" + 
-				"                        First Name: <input type=\"text\" name=\"FirstName\" value=\"Type your first name\" size=\"120\" maxlength=\"40\"><br>\r\n" + 
-				"                        Last Name: <input type=\"text\" name=\"LastName\" value=\"Type your last name\" size=\"120\" maxlength=\"40\"><br>\r\n" + 
-				"                        Username: <input type=\"text\" name=\"Username\" value=\"Type your username\" size=\"120\" maxlength=\"40\"><br>\r\n" + 
-				"                        Password: <input type=\"password\" name=\"Password\" value=\"Type your password\" size=\"120\" maxlength=\"40\"><br>\r\n" + 
-				"                        Age: <input type=\"text\" name=\"Username\" value=\"Type your age\" size=\"120\" maxlength=\"2\"><br>\r\n" + 
-				"                        Email: <input type=\"text\" name=\"Email\" value=\"Type your email address\" size=\"120\" maxlength=\"200\"><br>\r\n" + 
+				"                        First Name: <input type=\"text\" name=\"firstName\" placeholder=\"Type your first name\" size=\"120\" maxlength=\"40\"><br>\r\n" + 
+				"                        Last Name: <input type=\"text\" name=\"lastName\" placeholder=\"Type your last name\" size=\"120\" maxlength=\"40\"><br>\r\n" + 
+				"                        Username: <input type=\"text\" name=\"username\" placeholder=\"Type your username\" size=\"120\" maxlength=\"40\"><br>\r\n" + 
+				"                        Password: <input type=\"password\" name=\"password\" placeholder=\"Type your password\" size=\"120\" maxlength=\"40\"><br>\r\n" + 
+				"                        Age: <input type=\"number\" name=\"age\" placeholder=\"Type your age\" size=\"120\" maxlength=\"2\"><br>\r\n" + 
+				"                        Email: <input type=\"text\" name=\"email\" placeholder=\"Type your email address\" size=\"120\" maxlength=\"200\"><br>\r\n" + 
 				"                    </div>\r\n" + 
-				"                    <input type=\"submit\" value=\"Submit\">\r\n" + 
+				"                    <input onclick=\"window.location.href = 'localhost:8001/registerResponse/';\" type=\"submit\" value=\"Register\">\r\n" + 
 				"                </fieldset>\r\n" + 
 				"            </form>\r\n" + 
 				"        </section>\r\n" + 
-				t.getRequestURI().getQuery() +
 				"    </body>\r\n" + 
 				"</html>";
 		//set headers and status code
