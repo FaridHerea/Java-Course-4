@@ -7,6 +7,8 @@ import com.sun.net.httpserver.HttpHandler;
 @SuppressWarnings("restriction")
 public class LoginHandler implements HttpHandler{
 	public void handle(HttpExchange t) throws IOException{
+		System.out.println(t.getRequestURI().getQuery());
+		
 		//set he response as a string containing html code
 		String response="<html>\r\n" + 
 				"    <head>\r\n" + 
@@ -46,19 +48,17 @@ public class LoginHandler implements HttpHandler{
 				"            <a href=\"/contact/\">Contact</a>\r\n" + 
 				"        </nav>\r\n" + 
 				"        <section>\r\n" + 
-				"            <form>\r\n" + 
+				"            <form action=\"/loginResponse/\" method=\"GET\">\r\n" + 
 				"                <fieldset>\r\n" + 
 				"                    <legend>Login:</legend>\r\n" + 
 				"                    <div class=\"input\">\r\n" + 
-				"                        Username: <input type=\"text\" name=\"Username\" value=\"Type your username\" size=\"120\" maxlength=\"40\"><br>\r\n" + 
-				"                        Password: <input type=\"password\" name=\"Password\" value=\"Type your password\" size=\"120\" maxlength=\"40\"><br>\r\n" + 
-				"                        Email: <input type=\"text\" name=\"Email\" value=\"Type your email address\" size=\"120\" maxlength=\"200\"><br>\r\n" + 
+				"                        Username: <input type=\"text\" name=\"Username\" placeholder=\"Type your username\" size=\"120\" maxlength=\"40\"><br>\r\n" + 
+				"                        Password: <input type=\"password\" name=\"Password\" placeholder=\"Type your password\" size=\"120\" maxlength=\"40\"><br>\r\n" + 
 				"                    </div>\r\n" + 
-				"                    <input type=\"submit\" value=\"Submit\">\r\n" + 
+				"                    <input onlick=\"window.location.href = 'localhost:8001/loginResponse/';\" type=\"submit\" value=\"Login\">\r\n" + 
 				"                </fieldset>\r\n" + 
 				"            </form>\r\n" + 
 				"        </section>\r\n" + 
-				t.getRequestURI().getQuery() +
 				"    </body>\r\n" + 
 				"</html>";
 		//set header and status code

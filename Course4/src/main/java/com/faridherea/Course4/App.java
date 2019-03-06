@@ -17,6 +17,7 @@ public class App
     	server.createContext("/list/", new ListHandler());
     	server.createContext("/article/", new ArticleHandler());
     	server.createContext("/login/", new LoginHandler());
+    	server.createContext("/loginResponse/", new LoginResponseHandler());
     	server.createContext("/register/", new RegisterHandler());
     	server.createContext("/registerResponse/", new RegisterResponseHandler());
     	server.createContext("/form/", new FormHandler());
@@ -30,7 +31,7 @@ public class App
     	//instance DBConnection
     	DBConnection connection = new DBConnection();
     	try {
-    		connection.selectExample("client");
+    		connection.selectRegister("registerHandler");
     	} catch (Exception e) 
     	{
     		e.printStackTrace();

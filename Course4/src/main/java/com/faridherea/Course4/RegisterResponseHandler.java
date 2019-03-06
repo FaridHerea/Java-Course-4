@@ -16,9 +16,9 @@ public class RegisterResponseHandler implements HttpHandler {
 		String password = Globals.getUriValue(t, "password");
 		String age = Globals.getUriValue(t, "age");
 		String email = Globals.getUriValue(t, "email");
-		if(firstName!=null && lastName!=null && username!=null && password!=null && age!=null && email!=null) {
+		if(firstName.length()>0 && lastName.length()>0 && username.length()>0 && password.length()>0 && age.length()>0 && email.length()>0) {
 			try {
-				DBConnection.InsertExample(username, lastName, "client");
+				DBConnection.InsertRegister(firstName, lastName, username, password, age, email, "registerHandler");
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
